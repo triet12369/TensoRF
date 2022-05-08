@@ -68,7 +68,11 @@ class BlenderDataset(Dataset):
             c2w = torch.FloatTensor(pose)
             self.poses += [c2w]
 
-            image_path = os.path.join(self.root_dir, f"{frame['file_path']}.png")
+            # Modified: add check if there is file extension
+            if frame['file_path'].endswith('.png'):
+                image_path = os.path.join(self.root_dir, f"{frame['file_path']}")
+            else:
+                image_path = os.path.join(self.root_dir, f"{frame['file_path']}.png")
             self.image_paths += [image_path]
             img = Image.open(image_path)
             
